@@ -1,0 +1,81 @@
+{% load i18n %}
+
+<button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
+    <span class="navbar-toggler-icon">
+    </span>
+   </button>
+   <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto">
+     <li class="nav-item">
+      <a class="nav-link" data-tooltip="{% trans 'Inicio' %}" href="{% url 'home' %}">
+       <i class="fa fa-home">
+       </i>
+      </a>
+     </li>
+
+    {% if request.user.is_authenticated %}
+    <li class="nav-item">
+        <a class="nav-link" data-tooltip="{% trans 'Buscar' %}" href="#">
+         <i class="fa fa-search">
+         </i>
+        </a>
+       </li>
+     <li class="nav-item">
+        <a class="nav-link" data-tooltip="{% trans 'Publicar' %}" href="{% url 'post' %}">
+        <i class="fa fa-plus-square"></i>
+        </a>
+       </li>
+       <li class="nav-item">
+        <a class="nav-link" data-tooltip="{% trans 'Perfiles destacatos' %}" href="{% url 'profile_list' %}">
+        <i class="fa fa-users"></i>
+        </a>
+       </li>
+       <li class="nav-item">
+        <a class="nav-link" data-tooltip="{% trans 'Guardado' %}" href="#">
+        <i class="fa fa-bookmark"></i>
+        </a>
+       </li>
+       <li class="nav-item">
+        <a class="nav-link" data-tooltip="{% trans 'Mensajes' %}" href="#">
+        <i class="fa-solid fa-comment"></i>
+        </a>
+       </li>
+       <li class="nav-item">
+        <a class="nav-link" data-tooltip="{% trans 'Mi perfil'%}" href="{% url 'profile_detail' request.user.profile.pk %}">
+        <i class="fa fa-user"></i>
+        </a>
+       </li>
+        <li class="nav-item">
+            <a class="nav-link" data-tooltip="{% trans 'Cerrar sesión' %}" href="{% url 'logout' %}">
+            <i class="fa fa-right-from-bracket"></i></a>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" data-tooltip="{% trans 'Iniciar sesión' %}" href="{% url 'login' %}">
+            <i class="fa-solid fa-right-to-bracket"></i></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-tooltip="{% trans 'Registrarse' %}" href="{% url 'register' %}">
+            <i class="fa-solid fa-user-plus"></i></a>
+        </li>
+    {% endif %}
+    <li class="nav-item">
+        
+        <form action="{% url 'set_language' %}" method="post" >
+            {% csrf_token %}
+            <select name="language">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% for lang_code, lang_name in LANGUAGES %}
+                <option value="{{ lang_code }}" {% if LANGUAGE_CODE == lang_code %} selected {% endif %}>
+                    {% comment %} {{ lang_name }} {% endcomment %} ({{ lang_code }})    
+                </option>
+                {% endfor %}
+            </select>
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <input type="submit" class="btn btn-secondary btn-sm" value="{% trans 'Cambiar' %}">
+        </form>
+       </li>
+     
+    </ul>
+   </div>
+

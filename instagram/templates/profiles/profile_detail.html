@@ -1,0 +1,93 @@
+{% extends "core/layout.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load static %}
+
+{% block head_title %}{% trans 'Perfil' %}{% endblock %}
+
+{% block content %}
+
+    <div class="row profile">
+        <div class="div-center">
+            <div class="profile-container">
+                <div class="profile-info">
+                    
+                    {% comment %} Container publicacion {% endcomment %}
+            
+                {% if profile.profile_picture %}
+                    <figure>
+                        <a href="{% url 'profile_detail' profile.pk %}">
+                            <img class="rounded-circle" src="{{profile.profile_picture.url}}" alt="Mi Perfil" width="125">
+                        </a>
+                    </figure>
+                {% else %}
+                    <figure>
+                        <a href="{% url 'profile_detail' profile.pk %}">
+                            <img class="rounded-circle" src="{% static 'img/img-user-default.png' %}" alt="Mi Perfil" width="125">
+                        </a>
+                    </figure>
+                {% endif %}
+            </div>
+    
+                <div>
+                    <div class="user-actions">
+                        <h1>{{profile.user}}</h1>
+                        {% if profile.user == request.user %}
+                            <p><a class="btn btn-primary btn-sm ms-auto action" href="{% url 'profile_update' profile.pk %}">{% trans 'Editar ' %}</a></p>
+                        {% endif %}
+                        {% if profile.user != request.user %}
+                        <form action="" method="post" class="action">
+                            {% csrf_token %}
+                            {{ form.profile_pk|as_crispy_field }}
+                            {% if following %}
+                                <button type="submit" class="btn btn-primary btn-sm ms-auto action">{% trans 'Dejar de seguir' %}</button>
+                            {% else %}
+                                <button type="submit" class="btn btn-primary btn-sm ms-auto action">{% trans 'Seguir' %}</button>
+                            {% endif %}
+                        </form>
+                    {% endif %}
+                    </div>
+
+                    <div class="counters">
+                        <p>
+                            <strong>{{profile.user.posts.count}}</strong> {% trans ' Publicaciones' %}&nbsp;&nbsp;&nbsp;
+                            <strong>{{followers_count}}</strong> {% trans ' Seguidores' %}&nbsp;&nbsp;&nbsp;
+                            <strong>{{following_count}}</strong>{% trans ' Seguidos' %}
+                        </p>
+                    </div>
+                    <p>
+                        {% comment %} {% trans 'Nombre completo: ' %} {% endcomment %}
+                         <strong>{{profile.user.first_name}} {{profile.user.last_name}}</strong>
+                        
+                    </p>
+                    <p>
+                        {% comment %} {% trans 'Biografia: '%} {% endcomment %}
+                        {{profile.bio|default:"..."|safe}} 
+                    </p>
+    
+                </div>
+            </div>
+        </div>
+        
+            <section>
+                <h2>{% trans 'Publicaciones:' %}</h2>
+                    {% if post %}
+                    <div class="row">
+                        {% for post in profile.user.posts.all%}
+                        <div class="col-12 col-sm-6 col-md-4">
+                            {% include '_includes/posts/_post.html' %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="div-center">
+                        <h1>{% trans 'Todavía no hay publicaciones en el perfil.' %}</h1>
+                    </div>
+                        
+                    {% endif %}
+            </section>
+        
+    </div>
+
+
+{% endblock %}

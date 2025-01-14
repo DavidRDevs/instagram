@@ -1,0 +1,43 @@
+{% extends "core/layout.html" %}
+{% load i18n %}
+
+{% block head_title %}{% trans 'Página principal' %}{% endblock %}
+
+{% block content %}
+
+  {% comment %} container completo {% endcomment %}
+
+    <div class="row">
+        {% comment %} Container publicacion {% endcomment %}
+        {% if post %}
+        <div class="col-md-8">
+            {% for post in last_posts %}
+            <div class="card mb-4">
+                {% include '_includes/posts/_post.html' %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="div-center">
+            <h1>{% trans 'Todavía no hay publicaciones en la plataforma.' %}</h1>
+            
+        </div>
+        {% endif %}
+        {% comment %} fin Container publicacion {% endcomment %}
+
+        {% comment %} Container de la parte derecha {% endcomment %}
+            <div class="col-md-4 stiky">
+                {% comment %} historias {% endcomment %}
+                {% include '_includes/_historias.html' %}
+                {% comment %} fin historias {% endcomment %}
+
+                {% comment %} sugerencias {% endcomment %}
+                {% include '_includes/_sugerencias.html' %}
+                {% comment %} fin sugerencias {% endcomment %}
+            </div>
+        {% comment %} fin Container de la parte derecha {% endcomment %}
+    </div>
+
+{% comment %} Fin container completo {% endcomment %}
+
+{% endblock %}

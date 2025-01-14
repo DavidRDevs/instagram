@@ -1,0 +1,35 @@
+{% extends "core/layout.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block head_title %}{% trans 'Registro' %}{% endblock  %}
+
+{% block content %}
+<div class="row">
+    <h1>{% trans 'Registro' %}</h1>
+        
+
+    {% if form %}
+        
+        {% if error_message %}
+            <p>{{error_message}}</p>
+        {% endif %}
+        <div class="container">
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                {{ form.first_name|as_crispy_field }}
+                {{ form.last_name|as_crispy_field }}
+                {{ form.email|as_crispy_field }}
+                {{ form.username|as_crispy_field }}
+                {{ form.password|as_crispy_field }}
+
+                <button>{% trans 'Registrar' %}</button>
+
+            </form>
+        </div>
+    {% else %}
+        <p>{{msj}}</p>
+    {% endif %}
+</div>
+{% endblock  %}

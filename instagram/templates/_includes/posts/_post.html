@@ -1,0 +1,76 @@
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+    <div class="post-header d-flex align-items-center">
+        <a href="{% url 'profile_detail' post.user.profile.pk %}">
+            {% if post.user.profile.profile_picture%}
+            <img alt="Profile picture of user 1" class="profile-pic me-2" height="40" src="{{post.user.profile.profile_picture.url}}" width="40"/>
+            {% else %}
+            <img alt="Profile picture of user 1" class="profile-pic me-2" height="40" src="{% static 'img/img-user-default.png' %}" width="40"/>
+            {% endif %}
+            <strong>
+                {{ post.user }}
+            </strong>
+        </a>
+        &nbsp;&nbsp;&nbsp;
+        <span>
+        {{ post.created_at }}
+        </span>
+    </div>
+    <a href="{% url 'post_detail' post.pk%}">
+    {% if post.image %}
+        <img alt="{{post.caption}}" class="post-image" src="{{ post.image.url }}" width="600"/>
+    {% endif %}
+    </a>
+
+    <div class="post-footer">
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'post_like_ajax' post.pk %}" class="likeButton">
+                <span id="nLikes">{{ post.likes.all.count }}</span>
+                {% if request.user in post.likes.all %}
+                        <i class="fa fa-heart"></i>
+                    {% else %}
+                        <i class="far fa-heart"></i>
+                {% endif %}
+            </a>
+        {% else %}
+            <span id="nLikes">{{ post.likes.all.count }}</span>
+                <i class="far fa-heart" title="Debes de iniciar sesión"></i>
+        {% endif %}
+        <a href="{% url 'post_detail' post.pk%}">
+            {{ post.comments.all.count }} 
+            <i class="far fa-comment"></i>
+        </a>
+        
+        <i class="far fa-paper-plane"></i>
+        <p>
+        <strong>
+            <a href="{% url 'profile_detail' post.user.profile.pk %}">
+                {{ post.user }}
+            </a>
+        </strong>
+        {{ post.caption|safe }}
+        </p>
+        <section class="comments"> 
+            <h5>{% trans 'Comentarios' %}</h5>
+            {% if post.comments.all.count %}
+                {% for comment in post.comments.all %}
+                <hr>
+                    <article>
+                        <header>
+                            <strong>{{ comment.user }}</strong> <time datetime="{{comment.created_at}}">{% trans 'Hace' %} {{comment.created_at|timesince}}</time>
+                        </header>
+                        <div>
+                            <p>{{ comment.text}}</p>
+                            
+                        </div>
+                    </article>
+                    
+                {% endfor %}
+            {% else %}
+                    <p>{% trans 'Aún no hay comentarios para la publicación' %}</p>
+            {% endif %}
+
+        </section>
+    </div>

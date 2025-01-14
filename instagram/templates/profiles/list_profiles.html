@@ -1,0 +1,54 @@
+{% extends "core/layout.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load i18n %}
+
+{% block head_title %}{% trans 'Perfiles' %}{% endblock %}
+
+{% block content %}
+
+
+    <h1>{% trans 'Lista de perfiles destacados' %}</h1>
+    <div class="row">
+        {% for profile in profiles %}
+        <div class="col-12 col-sm-6 col-md-4">
+
+            {% comment %}  {% endcomment %}
+            
+            <div class="card mb-4">
+                <div class="post-header d-flex align-items-center">
+                    <a href="{% url 'profile_detail' profile.pk %}">
+                        {% if profile.profile_picture %}
+                        <img alt="Profile picture of user 1" class="profile-pic me-2" height="40" src="{{profile.profile_picture.url}}" width="40"/>
+                        {% else %}
+                        <img alt="Profile picture of user 1" class="profile-pic me-2" height="40" src="{% static 'img/img-user-default.png' %}" width="40"/>
+                        {% endif %}
+                        <strong>
+                            {{profile.user}}
+                        </strong>
+                    </a>
+                    
+                </div>
+                    <div class="post-footer">
+                    <p>
+                        {{ profile.bio|default:"Aun sin rellenar..."|truncatechars:50|safe }}
+                    </p>
+                    
+                    <p>
+                        <a href="{% url 'profile_detail' profile.pk %}">
+                            {% trans 'Ver perfil... ' %}
+                        </a>
+                    </p>
+                </div>
+            </div>
+            
+            
+            {% comment %}  {% endcomment %}
+
+            
+        </div>
+    {% endfor %}
+    </div>
+
+
+{% endblock %}

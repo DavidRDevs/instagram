@@ -1,0 +1,28 @@
+{% extends "core/layout.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block head_title %}{% trans 'Publicación' %}{% endblock  %}
+
+{% block content %}
+
+    <h1>{% trans 'Publicación' %}</h1>
+    <div class="row">
+        {% if error_message %}
+            <p>{{error_message}}</p>
+        {% endif %}
+        <div class="container">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {{ form.image|as_crispy_field }}
+                {{ form.caption|as_crispy_field }}
+                
+                <button>{% trans 'Publicar' %}</button>
+
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

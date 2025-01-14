@@ -1,0 +1,23 @@
+{% load static %}
+{% load i18n %}
+
+
+
+<div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">
+        {% trans 'Sugerencias para ti' %}
+      </h5>
+        <div class="d-flex align-items-center mb-3">
+          <img alt="Profile picture of user 9" class="profile-pic me-2" height="40" src="https://storage.googleapis.com/a1aa/image/7VMPNkkFP2rkGZoNf0qe0Wie31UPFnCSOX2ffJplc3BJViAeE.jpg" width="40"/>
+          <strong>
+          User 9
+          </strong>
+          <button class="btn btn-primary btn-sm ms-auto">
+            {% trans 'Seguir' %}
+          </button>
+        </div>
+        
+    </div>
+</div>
+{% include '_includes/_footer_principal.html' %}

@@ -1,0 +1,21 @@
+{% extends "core/layout.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block head_title %}{% trans 'Login' %}{% endblock  %}
+
+{% block content %}
+<div class="row">
+    <h1>{% trans 'Login' %}</h1>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {{ form.username|as_crispy_field }}
+        {{ form.password|as_crispy_field }}
+
+        <button>{% trans 'Entrar' %}</button>
+
+    </form>
+</div>
+{% endblock  %}

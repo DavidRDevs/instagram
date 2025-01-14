@@ -1,0 +1,15 @@
+{% load static %}
+{% load i18n %}
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+
+     <a class="navbar-brand" href="{% url 'home' %}">
+    <img width="50px" src="{% static 'img/logo_instagram.png' %}" alt="logotipo">
+      Instagram
+     </a>
+     {% include "_includes/_menu_principal.html" %}
+     
+    </div>
+</nav>

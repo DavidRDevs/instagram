@@ -1,0 +1,114 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.navbar-brand {
+  font-weight: 700;
+}
+nav a{
+  position: relative;
+}
+
+nav a::after {
+  content: attr(data-tooltip); /* Obtiene texto completo del atributo */
+  position: absolute; /* Posiciona relativo al enlace */
+  left: 50%; /* Centra horizontalmente */
+  transform: translateX(-50%);
+  bottom: -35px; /* Ajusta para que salga debajo */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  white-space: nowrap; /* Evita que el texto se corte o haga saltos de línea */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+nav a:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.post-header,
+.post-footer {
+  padding: 10px;
+}
+
+.post-footer .fa-heart,
+.post-footer .fa-comment,
+.post-footer .fa-paper-plane {
+  margin-right: 15px;
+}
+
+a {
+  text-decoration: none;
+  text-decoration-line: none;
+  color: black;
+}
+
+.stiky {
+  position: -webkit-sticky;
+  /* Compatibilidad con navegadores Safari */
+  position: sticky;
+  top: 10px;
+  max-height: 1px;
+}
+
+.profile p {
+  margin-bottom: 0;
+}
+
+.profile .action {
+  margin: 0;
+}
+
+.profile-container {
+  width: 80%;
+
+  display: grid;
+  grid-template-rows: repeat(auto-fit, 240px);
+  grid-template-columns: 0.5fr 1fr;
+  gap: 8px;
+  justify-content: center;
+  justify-items: center;
+}
+
+.div-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 1.5em;
+}
+
+.user-actions h1 {
+  margin: 0;
+}
+
+.counters{
+  margin-bottom: 1em;
+}
